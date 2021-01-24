@@ -42,7 +42,9 @@ client.on("message", async (message) => {
         distube.play(message, args.join(" ")); // plays music from youtube
 
     if (["repeat", "loop"].includes(command))
-        distube.setRepeatMode(message, parseInt(args[0]));
+    let mode = distube.setRepeatMode(message, parseInt(args[0]));
+    mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
+    message.channel.send("Set repeat mode to `" + mode + "`");
 
     if (command == "stop") {
         distube.stop(message);
