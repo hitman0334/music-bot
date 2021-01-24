@@ -11,7 +11,9 @@ const distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: true 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     console.log(`This bot is made by Shahzain please do not take any credits of this bot`) 
-    client.user.setActivity(`${config.prefix}help`)
+    client.user.setActivity(`${config.prefix}help || Bot by Shahzain`, {
+        type: "LISTENING"
+    })
 });
 
 client.on("message", async (message) => {
@@ -30,7 +32,7 @@ client.on("message", async (message) => {
         .addField('Stop Command', `${config.prefix}stop`)
         .addField('Skip Command', `${config.prefix}skip`)
         .addField('Queue Command', `${config.prefix}queue`)
-        .addField('BassBoost', `${config.prefix}bassboost`)
+        .addField('BassBoost Command', `${config.prefix}bassboost`)
         .setFooter(`© Shahzain `, client.user.displayAvatarURL())
     }
 
