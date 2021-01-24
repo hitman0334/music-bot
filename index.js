@@ -59,6 +59,15 @@ client.on("message", async (message) => {
             `**${id + 1}**. ${song.name} - \`${song.formattedDuration}\``
         ).slice(0, 10).join("\n")}});
     }
+    if (command === "volume") {
+        let volume = args[0]
+        if (!volume) return message.channel.send({embed: {
+            color: "GREEN",
+            description: "Please give the number to set the volume to!"
+        }})
+        distube.setVolume(message, args[0]);
+        message.channel.send({embed: {color: "GREEN", description: `Set volume to ${args[0]}`}})
+    }
 
     if ([`3d`, `bassboost`, `echo`, `karaoke`, `nightcore`, `vaporwave`].includes(command)) {
         let filter = distube.setFilter(message, command);
