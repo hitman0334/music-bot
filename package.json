@@ -1,0 +1,19 @@
+{
+  "name": "dailymusic",
+  "version": "1.0.0",
+  "description": "This is a simple music bot built by Shahzain for public",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Node",
+    "DiscordPlayer"
+  ],
+  "author": "Shahzain",
+  "license": "ISC",
+  "dependencies": {
+    "discord-player": "^3.2.1",
+    "discord.js": "^12.5.1"
+  }
+}
