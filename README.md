@@ -1,3 +1,5 @@
+# Note
+The bot is unstable for now, I will fix this asap
 # Discord Music Bot
 This bot is made by Shahzain with distube and discord.js you can deploy this bot to heroku with no problems 
 # Commands
