@@ -9,3 +9,5 @@ BassBoost
 Loop
 # Prefix and token
 Please make a env file and make a new PREFIX var and inside the value put in your prefix, make another var named TOKEN and inside the value put in your bot token, this bot does not require any api key
+# BuildPacks
+Add this buildpack to heroku before deploying: https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
