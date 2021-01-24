@@ -78,13 +78,13 @@ client.on("message", async (message) => {
     }
     if (command === "pause") {
         if(!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "There is nothing playing"}})
-        if (!distube.isPaused) return message.channel.send({embed: {color: "RED", description: "Queue is not paused"}})
+        if (distube.isPaused) return message.channel.send({embed: {color: "RED", description: "Queue is already paused"}})
         distube.pause(message)
         message.channel.send({embed: {color: "GREEN", description: "Paused the queue"}});
     }
     if (command === "resume") {
         if(!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "There is nothing playing"}})
-        if (distube.isPaused) return message.channel.send({embed: {color: "RED", description: "Queue is already paused"}})
+        if (!distube.isPaused) return message.channel.send({embed: {color: "RED", description: "Queue is not paused"}})
         distube.resume(message)
         message.channel.send({embed: {color: "GREEN", description: "Resumed the queue"}});
     }
