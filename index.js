@@ -44,7 +44,7 @@ client.on("message", async (message) => {
     if (command === "loop" || command === "repeat") {
         let mode = distube.setRepeatMode(message, parseInt(args[0]));
         mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
-        message.channel.send("Set repeat mode to `" + mode + "`");
+        message.channel.send({embed: {color: "GREEN", description: "Set repeat mode to `" + mode + "`"}});
     }
 
     if (command == "stop") {
