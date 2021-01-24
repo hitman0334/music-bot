@@ -40,7 +40,7 @@ client.on("message", async (message) => {
 
     if (command == "play" || command === "p")
     if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
-        distube.play(args.join(" ")); // plays music from youtube
+        distube.play(message, args.join(" ")); // plays music from youtube
 
     if (command === "loop" || command === "repeat") {
         if(!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "There is nothing playing"}})
