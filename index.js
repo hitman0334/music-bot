@@ -34,6 +34,7 @@ client.on("message", async (message) => {
         .addField('Queue Command', `${config.prefix}queue`)
         .addField('BassBoost Command', `${config.prefix}bassboost`)
         .setFooter(`© Shahzain `, client.user.displayAvatarURL())
+        message.channel.send(embed)
     }
 
     if (command == "play" || command === "p")
