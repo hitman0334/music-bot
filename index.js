@@ -32,6 +32,7 @@ client.on("message", async (message) => {
         .addField('Stop Command', `${config.prefix}stop`)
         .addField('Skip Command', `${config.prefix}skip`)
         .addField('Queue Command', `${config.prefix}queue`)
+        .addField('Volume Command', `${config.prefix}volume`)
         .addField('BassBoost Command', `${config.prefix}bassboost`)
         .setFooter(`© Shahzain `, client.user.displayAvatarURL())
         message.channel.send(embed)
