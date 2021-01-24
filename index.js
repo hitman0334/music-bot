@@ -41,10 +41,11 @@ client.on("message", async (message) => {
     if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
         distube.play(message, args.join(" ")); // plays music from youtube
 
-    if (["repeat", "loop"].includes(command))
-    let mode = distube.setRepeatMode(message, parseInt(args[0]));
-    mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
-    message.channel.send("Set repeat mode to `" + mode + "`");
+    if (command === "loop" || command === "repeat") {
+        let mode = distube.setRepeatMode(message, parseInt(args[0]));
+        mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
+        message.channel.send("Set repeat mode to `" + mode + "`");
+    }
 
     if (command == "stop") {
         distube.stop(message);
