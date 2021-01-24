@@ -41,20 +41,14 @@ client.on("message", async (message) => {
         distube.play(message, args.join(" ")); // plays music from youtube
 
     if (["repeat", "loop"].includes(command))
-    let queue = distube.getQueue(message);
-        if (!queue) return message.channel.send({embed: {color: "GREEN", description: "There is nothing playing"}})
         distube.setRepeatMode(message, parseInt(args[0]));
 
     if (command == "stop") {
-        let queue = distube.getQueue(message);
-        if (!queue) return message.channel.send({embed: {color: "GREEN", description: "There is nothing playing"}})
         distube.stop(message);
         message.channel.send({embed: {color: "GREEN", description:"Stopped the music!"}});
     }
 
     if (command == "skip")
-    let queue = distube.getQueue(message);
-        if (!queue) return message.channel.send({embed: {color: "GREEN", description: "There is nothing playing"}})
         distube.skip(message);
 
     if (command == "queue") {
