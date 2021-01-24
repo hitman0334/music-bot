@@ -2,15 +2,16 @@ const Discord = require('discord.js'),
     DisTube = require('distube'),
     client = new Discord.Client(),
     config = {
-        prefix: "!",
+        prefix: process.env.PREFIX || "Custom Prefix",
         token: process.env.TOKEN || "Your Discord Token"
     };
 
-// Create a new DisTube
 const distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: true });
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+    console.log(`This bot is made by Shahzain please do not take any credits of this bot`) 
+    client.user.setActivity(`${config.prefix}help`)
 });
 
 client.on("message", async (message) => {
@@ -19,60 +20,80 @@ client.on("message", async (message) => {
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift();
 
-    if (command == "play")
-        distube.play(message, args.join(" "));
+    if (command === "help") {
+        let embed = new Discord.MessageEmbed()
+        .setColor('GREEN')
+        .setTitle(`${client.user.username} Commands`)
+        .setThumbnail(client.user.displayAvatarURL())
+        .addField('Play Command', `${config.prefix}play`)
+        .addField('Loop Command', `${config.prefix}loop`)
+        .addField('Stop Command', `${config.prefix}stop`)
+        .addField('Skip Command', `${config.prefix}skip`)
+        .addField('Queue Command', `${config.prefix}queue`)
+        .addField('BassBoost', `${config.prefix}bassboost`)
+        .setFooter(`© Shahzain `, client.user.displayAvatarURL())
+    }
+
+    if (command == "play" || command === "p")
+    if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
+        distube.play(message, args.join(" ")); // plays music from youtube
 
     if (["repeat", "loop"].includes(command))
+    let queue = distube.getQueue(message);
+        if (!queue) return message.channel.send({embed: {color: "GREEN", description: "There is nothing playing"}})
         distube.setRepeatMode(message, parseInt(args[0]));
 
     if (command == "stop") {
+        let queue = distube.getQueue(message);
+        if (!queue) return message.channel.send({embed: {color: "GREEN", description: "There is nothing playing"}})
         distube.stop(message);
-        message.channel.send("Stopped the music!");
+        message.channel.send({embed: {color: "GREEN", description:"Stopped the music!"}});
     }
 
     if (command == "skip")
+    let queue = distube.getQueue(message);
+        if (!queue) return message.channel.send({embed: {color: "GREEN", description: "There is nothing playing"}})
         distube.skip(message);
 
     if (command == "queue") {
         let queue = distube.getQueue(message);
-        message.channel.send('Current queue:\n' + queue.songs.map((song, id) =>
+        if (!queue) return message.channel.send({embed: {color: "GREEN", description: "There is nothing playing"}})
+        message.channel.send({embed: {color: "GREEN", description:'Current queue:\n' + queue.songs.map((song, id) =>
             `**${id + 1}**. ${song.name} - \`${song.formattedDuration}\``
-        ).slice(0, 10).join("\n"));
+        ).slice(0, 10).join("\n")}});
     }
 
     if ([`3d`, `bassboost`, `echo`, `karaoke`, `nightcore`, `vaporwave`].includes(command)) {
         let filter = distube.setFilter(message, command);
-        message.channel.send("Current queue filter: " + (filter || "Off"));
+        message.channel.send({embed: {color: "GREEN", description:"Current queue filter: " + (filter || "Off")}});
     }
 });
 
-// Queue status template
 const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
 
-// DisTube event listeners, more in the documentation page
 distube
-    .on("playSong", (message, queue, song) => message.channel.send(
+    .on("playSong", (message, queue, song) => message.channel.send({embed: {color: "GREEN", description:
         `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`
-    ))
-    .on("addSong", (message, queue, song) => message.channel.send(
+}}))
+    .on("addSong", (message, queue, song) => message.channel.send({embed: {color: "GREEN", description:
         `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`
-    ))
-    .on("playList", (message, queue, playlist, song) => message.channel.send(
+}}))
+    .on("playList", (message, queue, playlist, song) => message.channel.send({embed: {color: "RED", description:
         `Play \`${playlist.name}\` playlist (${playlist.songs.length} songs).\nRequested by: ${song.user}\nNow playing \`${song.name}\` - \`${song.formattedDuration}\`\n${status(queue)}`
-    ))
-    .on("addList", (message, queue, playlist) => message.channel.send(
+}}))
+    .on("addList", (message, queue, playlist) => message.channel.send({embed: {color: "GREEN", description:
         `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to queue\n${status(queue)}`
-    ))
+    }}))
     // DisTubeOptions.searchSongs = true
     .on("searchResult", (message, result) => {
         let i = 0;
-        message.channel.send(`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`);
+        message.channel.send({embed: {color: "GREEN", description:`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`}});
     })
     // DisTubeOptions.searchSongs = true
-    .on("searchCancel", (message) => message.channel.send(`Searching canceled`))
+    .on("searchCancel", (message) => message.channel.send({embed: {color: "RED", description:`Searching canceled`}}))
     .on("error", (message, e) => {
         console.error(e)
-        message.channel.send("An error encountered: " + e);
+        message.channel.send({embed: {color: "RED", description:"An error encountered: " + e}});
     });
 
 client.login(config.token);
