@@ -129,6 +129,11 @@ client.on("message", async (message) => {
         message.channel.send({embed: {color: "RED", description: "An error occured"}})
     }
     }
+    if (command === "join") {
+        if (!message.member.voice.channel) return message.channel.send({embed: {color: "RED", description: "Please join a voice channel!"}})
+        message.member.voice.channel.join()
+        message.channel.send({embed: {color: "GREEN", description: "Joined your voice channel"}})
+    }
 
     if ([`3d`, `bassboost`, `echo`, `karaoke`, `nightcore`, `vaporwave`].includes(command)) {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
