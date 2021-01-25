@@ -50,7 +50,7 @@ client.on("message", async (message) => {
 }
 
     if (command === "loop" || command === "repeat") {
-        if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
+        if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}}) // Checks if music is playing or not
         try {
         let mode = distube.setRepeatMode(message, parseInt(args[0]));
         mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
@@ -111,9 +111,9 @@ client.on("message", async (message) => {
     }
     }
     if (command === "pause") {
-        if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
+        if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}}) 
         try {
-        if (distube.isPaused(message)) return message.channel.send({embed: {color: "RED", description: "Queue is already paused"}})
+        if (distube.isPaused(message)) return message.channel.send({embed: {color: "RED", description: "Queue is already paused"}}) // checks if the queue is paused
         distube.pause(message)
         message.channel.send({embed: {color: "GREEN", description: "Paused the queue"}});
     } catch(err) {
@@ -122,7 +122,7 @@ client.on("message", async (message) => {
     }
     if (command === "resume") {
         try {
-        if (!distube.isPaused(message)) return message.channel.send({embed: {color: "RED", description: "Queue is not paused"}})
+        if (!distube.isPaused(message)) return message.channel.send({embed: {color: "RED", description: "Queue is not paused"}}) // checks if the queue is paused
         distube.resume(message)
         message.channel.send({embed: {color: "GREEN", description: "Resumed the queue"}});
     } catch(err) {
@@ -156,12 +156,12 @@ distube
     .on("addList", (message, queue, playlist) => message.channel.send({embed: {color: "GREEN", description:
         `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to queue\n${status(queue)}`
     }}))
-    // DisTubeOptions.searchSongs = true
+    // if DisTubeOptions.searchSongs = true
     .on("searchResult", (message, result) => {
         let i = 0;
         message.channel.send({embed: {color: "GREEN", description:`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`}});
     })
-    // DisTubeOptions.searchSongs = true
+    // if DisTubeOptions.searchSongs = true
     .on("searchCancel", (message) => message.channel.send({embed: {color: "RED", description:`Searching canceled`}}))
     .on("error", (message, e) => {
         console.error(e)
