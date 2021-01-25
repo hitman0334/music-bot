@@ -9,6 +9,9 @@ BassBoost
 Loop
 Volume
 Autoplay
+Pause
+Resume
+Join
 # Prefix and token
 Please make a env file and make a new PREFIX var and inside the value put in your prefix, make another var named TOKEN and inside the value put in your bot token, this bot does not require any api key
 # BuildPacks
