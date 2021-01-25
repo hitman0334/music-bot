@@ -146,38 +146,38 @@ client.on("message", async (message) => {
         message.channel.send({embed: {color: "RED", description: "An error occured"}})
     }
     }
-    distube
-    .on("playSong", (message, queue, song) => message.channel.send({embed: {color: "GREEN", description:
-        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`
-}}))
-    .on("addSong", (message, queue, song) => message.channel.send({embed: {color: "GREEN", description:
-        `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`
-}}))
-    .on("playList", (message, queue, playlist, song) => message.channel.send({embed: {color: "RED", description:
-        `Play \`${playlist.name}\` playlist (${playlist.songs.length} songs).\nRequested by: ${song.user}\nNow playing \`${song.name}\` - \`${song.formattedDuration}\`\n${status(queue)}`
-}}))
-    .on("addList", (message, queue, playlist) => message.channel.send({embed: {color: "GREEN", description:
-        `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to queue\n${status(queue)}`
-    }}))
-    // if DisTubeOptions.searchSongs = true
-    .on("searchResult", (message, result) => {
-        let i = 0;
-        message.channel.send({embed: {color: "GREEN", description:`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`}});
-    })
-    // if DisTubeOptions.searchSongs = true
-    .on("searchCancel", (message) => message.channel.send({embed: {color: "RED", description:`Searching canceled`}}))
-    .on("error", (message, e) => {
-        console.error(e)
-        message.channel.send({embed: {color: "RED", description:"An error encountered: " + e}})
-    .on('finish', async (message) => {
-        message.channel.send({embed: {color: "GREEN", description: "Music Queue ended"}})
-        playing.delete(message.guild.id)
-    })
-    });
+   
 });
 
 const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
 
-
+distube
+.on("playSong", (message, queue, song) => message.channel.send({embed: {color: "GREEN", description:
+    `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`
+}}))
+.on("addSong", (message, queue, song) => message.channel.send({embed: {color: "GREEN", description:
+    `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`
+}}))
+.on("playList", (message, queue, playlist, song) => message.channel.send({embed: {color: "RED", description:
+    `Play \`${playlist.name}\` playlist (${playlist.songs.length} songs).\nRequested by: ${song.user}\nNow playing \`${song.name}\` - \`${song.formattedDuration}\`\n${status(queue)}`
+}}))
+.on("addList", (message, queue, playlist) => message.channel.send({embed: {color: "GREEN", description:
+    `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to queue\n${status(queue)}`
+}}))
+// if DisTubeOptions.searchSongs = true
+.on("searchResult", (message, result) => {
+    let i = 0;
+    message.channel.send({embed: {color: "GREEN", description:`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`}});
+})
+// if DisTubeOptions.searchSongs = true
+.on("searchCancel", (message) => message.channel.send({embed: {color: "RED", description:`Searching canceled`}}))
+.on("error", (message, e) => {
+    console.error(e)
+    message.channel.send({embed: {color: "RED", description:"An error encountered: " + e}})
+.on('finish', async (message) => {
+    message.channel.send({embed: {color: "GREEN", description: "Music Queue ended"}})
+    playing.delete(message.guild.id)
+})
+});
 
 client.login(config.token);
