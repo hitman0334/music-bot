@@ -40,10 +40,14 @@ client.on("message", async (message) => {
     }
 
     if (command == "play" || command === "p") {
+        try {
         if (!message.member.voice.channel) return message.channel.send({embed: {color: "RED", description: "Please join a voice channel!"}})
     if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
         distube.play(message, args.join(" ")); // plays music from youtube
+    } catch(err) {
+        message.channel.send({embed: "RED", description: `An error occured: ${err}`})
     }
+}
 
     if (command === "loop" || command === "repeat") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
