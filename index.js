@@ -77,8 +77,16 @@ client.on("message", async (message) => {
     } catch(err) {
         message.channel.send({embed: {color: "RED", description: "There was an error"}})
     }
+}
+    if (command == "autoplay") {
+        if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
+        try {
+        let mode = distube.toggleAutoplay(message);
+        message.channel.send({embed: {color: "RED", description: "Set autoplay mode to `" + (mode ? "On" : "Off") + "`"}});
+    } catch(err) {
+        message.channel.send({embed: {color: "RED", description: "There was an error"}})
     }
-
+    }
     if (command == "queue") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         let queue = distube.getQueue(message);
