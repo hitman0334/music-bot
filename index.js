@@ -87,7 +87,7 @@ client.on("message", async (message) => {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
         let volume = args[0]
-        if (!volume.isInteger()) return message.channel.send({embed: {color: "RED", description: "The given value is not a number!"}})
+        if (!volume.isNaN()) return message.channel.send({embed: {color: "RED", description: "The given value is not a number!"}})
         if (!volume) return message.channel.send({embed: {
             color: "GREEN",
             description: "Please give the number to set the volume to!"
