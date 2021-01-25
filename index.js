@@ -7,7 +7,6 @@ const Discord = require('discord.js'),
     };
 
 const distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: true });
-let playing = new Set()
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -34,6 +33,7 @@ client.on("message", async (message) => {
         .addField('Skip Command', `${config.prefix}skip`)
         .addField('Queue Command', `${config.prefix}queue`)
         .addField('Volume Command', `${config.prefix}volume`)
+        .addField('Join Command', `${config.prefix}join`)
         .addField('BassBoost Command', `${config.prefix}bassboost`)
         .setFooter(`© Shahzain `, client.user.displayAvatarURL())
         message.channel.send(embed)
