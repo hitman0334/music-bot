@@ -111,8 +111,9 @@ client.on("message", async (message) => {
             description: "Please give the number to set the volume to!"
         }})
         if (isNaN(volume)) return message.channel.send({embed: {color: "RED", description: "The given number is invalid!"}})
+        if (volume < 0 || volume > 200) return message.channel.send({embed: {color: "RED", description: "The number should be between 0 and 200"}})
         distube.setVolume(message, volume);
-        message.channel.send({embed: {color: "GREEN", description: `Set volume to ${volume}`}})
+        message.channel.send({embed: {color: "GREEN", description: `Set volume to ${volume}%`}})
     } catch(err) {
         message.channel.send({embed: {color: "RED", description: "There was an error"}})
     }
