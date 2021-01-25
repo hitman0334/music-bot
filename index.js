@@ -45,10 +45,13 @@ client.on("message", async (message) => {
         playing.add(message.guild.id)
 
     if (command === "loop" || command === "repeat") {
-        if (!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
+        try {
         let mode = distube.setRepeatMode(message, parseInt(args[0]));
         mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
         message.channel.send({embed: {color: "GREEN", description: "Set repeat mode to `" + mode + "`"}});
+        } catch(err) {
+            message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
+        }
     }
 
     if (command == "stop") {
@@ -57,7 +60,6 @@ client.on("message", async (message) => {
     }
 
     if (command == "skip") {
-    if (!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         distube.skip(message);
     }
 
@@ -69,7 +71,6 @@ client.on("message", async (message) => {
         ).slice(0, 10).join("\n")}});
     }
     if (command === "volume") {
-        if (!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         let volume = args[0]
         if (!volume) return message.channel.send({embed: {
             color: "GREEN",
@@ -79,20 +80,17 @@ client.on("message", async (message) => {
         message.channel.send({embed: {color: "GREEN", description: `Set volume to ${args[0]}`}})
     }
     if (command === "pause") {
-        if (!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         if (distube.isPaused) return message.channel.send({embed: {color: "RED", description: "Queue is already paused"}})
         distube.pause(message)
         message.channel.send({embed: {color: "GREEN", description: "Paused the queue"}});
     }
     if (command === "resume") {
-        if (!playing.has(message.guild.id)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         if (!distube.isPaused) return message.channel.send({embed: {color: "RED", description: "Queue is not paused"}})
         distube.resume(message)
         message.channel.send({embed: {color: "GREEN", description: "Resumed the queue"}});
     }
 
     if ([`3d`, `bassboost`, `echo`, `karaoke`, `nightcore`, `vaporwave`].includes(command)) {
-        if (!playing.has(message.guild.id)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         let filter = distube.setFilter(message, command);
         message.channel.send({embed: {color: "GREEN", description:"Current queue filter: " + (filter || "Off")}});
     }
