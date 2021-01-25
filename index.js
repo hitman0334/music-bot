@@ -94,7 +94,7 @@ client.on("message", async (message) => {
     }
     if (command === "pause") {
         try {
-        if (distube.isPaused) return message.channel.send({embed: {color: "RED", description: "Queue is already paused"}})
+        if (distube.isPaused(message)) return message.channel.send({embed: {color: "RED", description: "Queue is already paused"}})
         distube.pause(message)
         message.channel.send({embed: {color: "GREEN", description: "Paused the queue"}});
     } catch(err) {
