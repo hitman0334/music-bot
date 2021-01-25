@@ -7,6 +7,7 @@ const Discord = require('discord.js'),
     };
 
 const distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: true });
+let playing = new Set()
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -41,25 +42,27 @@ client.on("message", async (message) => {
     if (command == "play" || command === "p")
     if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
         distube.play(message, args.join(" ")); // plays music from youtube
+        playing.add(message.guild.id)
 
     if (command === "loop" || command === "repeat") {
-        if(!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "There is nothing playing"}})
+        if (!playing.has(message.guild.id)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         let mode = distube.setRepeatMode(message, parseInt(args[0]));
         mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
         message.channel.send({embed: {color: "GREEN", description: "Set repeat mode to `" + mode + "`"}});
     }
 
     if (command == "stop") {
-        if(!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "There is nothing playing"}})
         distube.stop(message);
         message.channel.send({embed: {color: "GREEN", description:"Stopped the music!"}});
     }
 
     if (command == "skip")
-    if(!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "There is nothing playing"}})
+    if (!playing.has(message.guild.id)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
+    
         distube.skip(message);
 
     if (command == "queue") {
+        if (!playing.has(message.guild.id)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         let queue = distube.getQueue(message);
         if (!queue) return message.channel.send({embed: {color: "GREEN", description: "There is nothing playing"}})
         message.channel.send({embed: {color: "GREEN", description:'Current queue:\n' + queue.songs.map((song, id) =>
@@ -67,7 +70,7 @@ client.on("message", async (message) => {
         ).slice(0, 10).join("\n")}});
     }
     if (command === "volume") {
-        if(!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "There is nothing playing"}})
+        if (!playing.has(message.guild.id)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         let volume = args[0]
         if (!volume) return message.channel.send({embed: {
             color: "GREEN",
@@ -77,20 +80,20 @@ client.on("message", async (message) => {
         message.channel.send({embed: {color: "GREEN", description: `Set volume to ${args[0]}`}})
     }
     if (command === "pause") {
-        if(!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "There is nothing playing"}})
+        if (!playing.has(message.guild.id)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         if (distube.isPaused) return message.channel.send({embed: {color: "RED", description: "Queue is already paused"}})
         distube.pause(message)
         message.channel.send({embed: {color: "GREEN", description: "Paused the queue"}});
     }
     if (command === "resume") {
-        if(!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "There is nothing playing"}})
+        if (!playing.has(message.guild.id)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         if (!distube.isPaused) return message.channel.send({embed: {color: "RED", description: "Queue is not paused"}})
         distube.resume(message)
         message.channel.send({embed: {color: "GREEN", description: "Resumed the queue"}});
     }
 
     if ([`3d`, `bassboost`, `echo`, `karaoke`, `nightcore`, `vaporwave`].includes(command)) {
-        if(!distube.isPlaying) return message.channel.send({embed: {color: "RED", description: "There is nothing playing"}})
+        if (!playing.has(message.guild.id)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         let filter = distube.setFilter(message, command);
         message.channel.send({embed: {color: "GREEN", description:"Current queue filter: " + (filter || "Off")}});
     }
@@ -120,7 +123,11 @@ distube
     .on("searchCancel", (message) => message.channel.send({embed: {color: "RED", description:`Searching canceled`}}))
     .on("error", (message, e) => {
         console.error(e)
-        message.channel.send({embed: {color: "RED", description:"An error encountered: " + e}});
+        message.channel.send({embed: {color: "RED", description:"An error encountered: " + e}})
+    .on('finish', async (message) => {
+        message.channel.send({embed: {color: "GREEN", description: "Music Queue ended"}})
+        playing.delete(message.guild.id)
+    })
     });
 
 client.login(config.token);
