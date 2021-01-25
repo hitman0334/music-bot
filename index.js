@@ -73,7 +73,7 @@ client.on("message", async (message) => {
     if (command == "skip") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
-        distube.skip(message);
+        distube.skip(message)
     } catch(err) {
         message.channel.send({embed: {color: "RED", description: "There was an error"}})
     }
