@@ -33,6 +33,8 @@ client.on("message", async (message) => {
         .addField('Skip Command', `${config.prefix}skip`)
         .addField('Queue Command', `${config.prefix}queue`)
         .addField('Volume Command', `${config.prefix}volume`)
+        .addField('Pause Command', `${config.prefix}pause`)
+        .addField('Resume Command', `${config.prefix}resume`)
         .addField('Join Command', `${config.prefix}join`)
         .addField('BassBoost Command', `${config.prefix}bassboost`)
         .setFooter(`© Shahzain `, client.user.displayAvatarURL())
