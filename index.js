@@ -146,11 +146,7 @@ client.on("message", async (message) => {
         message.channel.send({embed: {color: "RED", description: "An error occured"}})
     }
     }
-});
-
-const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
-
-distube
+    distube
     .on("playSong", (message, queue, song) => message.channel.send({embed: {color: "GREEN", description:
         `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`
 }}))
@@ -178,5 +174,10 @@ distube
         playing.delete(message.guild.id)
     })
     });
+});
+
+const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
+
+
 
 client.login(config.token);
