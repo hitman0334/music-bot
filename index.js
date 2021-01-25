@@ -39,10 +39,11 @@ client.on("message", async (message) => {
         message.channel.send(embed)
     }
 
-    if (command == "play" || command === "p")
+    if (command == "play" || command === "p") {
+        if (!message.member.voice.channel) return message.channel.send({embed: {color: "RED", description: "Please join a voice channel!"}})
     if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
         distube.play(message, args.join(" ")); // plays music from youtube
-        playing.add(message.guild.id)
+    }
 
     if (command === "loop" || command === "repeat") {
         try {
