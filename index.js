@@ -43,7 +43,7 @@ client.on("message", async (message) => {
         .addField('Nightcore Command', `${config.prefix}nightcore`)
         .addField('Vaporwave Command', `${config.prefix}vaporwave`)
         .setFooter(`© Shahzain `, client.user.displayAvatarURL())
-        message.channel.send(embed) 
+        message.channel.send(embed) // sends the embed
     }
 
     if (command == "play" || command === "p") {
