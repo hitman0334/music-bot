@@ -121,13 +121,12 @@ client.on("message", async (message) => {
     }
     }
     if (command === "resume") {
-        if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
         if (!distube.isPaused(message)) return message.channel.send({embed: {color: "RED", description: "Queue is not paused"}})
         distube.resume(message)
         message.channel.send({embed: {color: "GREEN", description: "Resumed the queue"}});
     } catch(err) {
-        message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
+        message.channel.send({embed: {color: "RED", description: "An error occured"}})
     }
     }
 
