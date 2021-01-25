@@ -98,14 +98,14 @@ client.on("message", async (message) => {
     if (command === "volume") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
-        let volume = args[0]
-        if (!volume.isNaN()) return message.channel.send({embed: {color: "RED", description: "The given value is not a number!"}})
+        let volume = Number(args[0], 10)
+        if (isNaN(volume)) return message.channel.send({embed: {color: "RED", description: "The given number is invalid!"}})
         if (!volume) return message.channel.send({embed: {
             color: "GREEN",
             description: "Please give the number to set the volume to!"
         }})
-        distube.setVolume(message, args[0]);
-        message.channel.send({embed: {color: "GREEN", description: `Set volume to ${args[0]}`}})
+        distube.setVolume(message, volume);
+        message.channel.send({embed: {color: "GREEN", description: `Set volume to ${volume}`}})
     } catch(err) {
         message.channel.send({embed: {color: "RED", description: "There was an error"}})
     }
@@ -136,7 +136,7 @@ client.on("message", async (message) => {
         let filter = distube.setFilter(message, command);
         message.channel.send({embed: {color: "GREEN", description:"Current queue filter: " + (filter || "Off")}});
     } catch(err) {
-        message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
+        message.channel.send({embed: {color: "RED", description: "An error occured"}})
     }
     }
 });
