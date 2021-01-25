@@ -37,6 +37,11 @@ client.on("message", async (message) => {
         .addField('Resume Command', `${config.prefix}resume`)
         .addField('Join Command', `${config.prefix}join`)
         .addField('BassBoost Command', `${config.prefix}bassboost`)
+        .addField('Echo Comamnd', `${config.prefix}echo`)
+        .addField('3d Comamnd', `${config.prefix}3d`)
+        .addField('Karaoke Comamnd', `${config.prefix}karaoke`)
+        .addField('Nightcore Command', `${config.prefix}nightcore`)
+        .addField('Vaporwave Command', `${config.prefix}vaporwave`)
         .setFooter(`© Shahzain `, client.user.displayAvatarURL())
         message.channel.send(embed)
     }
@@ -176,7 +181,6 @@ distube
     message.channel.send({embed: {color: "RED", description:"An error encountered: " + e}})
 .on('finish', async (message) => {
     message.channel.send({embed: {color: "GREEN", description: "Music Queue ended"}})
-    playing.delete(message.guild.id)
 })
 });
 
