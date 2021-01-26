@@ -106,10 +106,10 @@ client.on("message", async (message) => {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
         let volume = Number(args[0], 10)
-        if (!volume) return message.channel.send({embed: {
-            color: "RED",
-            description: "Please give the number to set the volume to!"
-        }})
+        if (!volume) {
+            let volume = (queue) => await message.channel.send({embed: {color: "GREEN", description: `Volume: ${queue.volume}%`}}) 
+            return;
+        }
         if (isNaN(volume)) return message.channel.send({embed: {color: "RED", description: "The given number is invalid!"}})
         if (volume < 0 || volume > 200) return message.channel.send({embed: {color: "RED", description: "The number should be between 0 and 200"}})
         distube.setVolume(message, volume);
