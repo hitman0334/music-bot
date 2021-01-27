@@ -32,7 +32,7 @@ client.on("message", async (message) => {
         .addField('Stop Command', `${config.prefix}stop`)
         .addField('Skip Command', `${config.prefix}skip`)
         .addField('Queue Command', `${config.prefix}queue`)
-        .addField('Volume Command', `${config.prefix}volume`)
+        .addField('Volume Command', `${config.prefix}volume <number>`)
         .addField('Pause Command', `${config.prefix}pause`)
         .addField('Resume Command', `${config.prefix}resume`)
         .addField('Join Command', `${config.prefix}join`)
