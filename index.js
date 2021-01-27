@@ -150,7 +150,7 @@ client.on("message", async (message) => {
     if (command === "join") {
         if (!message.member.voice.channel) return message.channel.send({embed: {color: "RED", description: "Please join a voice channel!"}})
         message.member.voice.channel.join()
-        message.guild.me.voice.setDeaf()
+        message.guild.me.voice.setDeaf(client.user)
         message.channel.send({embed: {color: "GREEN", description: "Joined your voice channel"}})
     }
 
