@@ -50,7 +50,7 @@ client.on("message", async (message) => {
         try {
         if (!message.member.voice.channel) return message.channel.send({embed: {color: "RED", description: "Please join a voice channel!"}})
         if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
-        message.guild.me.voice.setDeaf()
+        message.guild.me.voice.setDeaf(true, "Privacy reasons")
     if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
         distube.play(message, args.join(" ")); // plays music from youtube
     } catch(err) {
@@ -150,7 +150,7 @@ client.on("message", async (message) => {
     if (command === "join") {
         if (!message.member.voice.channel) return message.channel.send({embed: {color: "RED", description: "Please join a voice channel!"}})
         message.member.voice.channel.join()
-        message.guild.me.voice.setDeaf(client.user)
+        message.guild.me.voice.setDeaf(true, "Privacy reasons")
         message.channel.send({embed: {color: "GREEN", description: "Joined your voice channel"}})
     }
 
