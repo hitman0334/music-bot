@@ -49,6 +49,7 @@ client.on("message", async (message) => {
     if (command == "play" || command === "p") {
         try {
         if (!message.member.voice.channel) return message.channel.send({embed: {color: "RED", description: "Please join a voice channel!"}})
+        if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
     if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
         distube.play(message, args.join(" ")); // plays music from youtube
     } catch(err) {
@@ -59,6 +60,7 @@ client.on("message", async (message) => {
     if (command === "loop" || command === "repeat") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}}) // Checks if music is playing or not
         try {
+            if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
         let mode = distube.setRepeatMode(message, parseInt(args[0]));
         mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
         message.channel.send({embed: {color: "GREEN", description: "Set repeat mode to `" + mode + "`"}});
@@ -70,6 +72,7 @@ client.on("message", async (message) => {
     if (command == "stop") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
+            if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
         distube.stop(message);
         message.channel.send({embed: {color: "GREEN", description:"Stopped the music!"}});
         } catch(err) {
@@ -80,6 +83,7 @@ client.on("message", async (message) => {
     if (command == "skip") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
+            if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
         distube.skip(message)
     } catch(err) {
         message.channel.send({embed: {color: "RED", description: "There was an error"}})
@@ -88,6 +92,7 @@ client.on("message", async (message) => {
     if (command == "autoplay") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
+            if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
         let mode = distube.toggleAutoplay(message);
         message.channel.send({embed: {color: "GREEN", description: "Set autoplay mode to `" + (mode ? "On" : "Off") + "`"}});
     } catch(err) {
@@ -96,6 +101,7 @@ client.on("message", async (message) => {
     }
     if (command == "queue") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
+        if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
         let queue = distube.getQueue(message);
         if (!queue) return message.channel.send({embed: {color: "GREEN", description: "There is nothing playing"}})
         message.channel.send({embed: {color: "GREEN", description:'Current queue:\n' + queue.songs.map((song, id) =>
@@ -105,6 +111,7 @@ client.on("message", async (message) => {
     if (command === "volume") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
+            if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
         let volume = Number(args[0], 10)
         if (!volume) {
             const status = (queue) => `Volume: ${queue.volume}%`;
@@ -122,6 +129,7 @@ client.on("message", async (message) => {
     if (command === "pause") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}}) 
         try {
+            if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
         if (distube.isPaused(message)) return message.channel.send({embed: {color: "RED", description: "Queue is already paused"}}) // checks if the queue is paused
         distube.pause(message)
         message.channel.send({embed: {color: "GREEN", description: "Paused the queue"}});
@@ -147,6 +155,7 @@ client.on("message", async (message) => {
     if ([`3d`, `bassboost`, `echo`, `karaoke`, `nightcore`, `vaporwave`].includes(command)) {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
+            if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
         let filter = distube.setFilter(message, command);
         message.channel.send({embed: {color: "GREEN", description:"Current queue filter: " + (filter || "Off")}});
     } catch(err) {
