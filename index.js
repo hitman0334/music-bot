@@ -27,7 +27,7 @@ client.on("message", async (message) => {
         .setColor('GREEN')
         .setTitle(`${client.user.username} Commands`)
         .setThumbnail(client.user.displayAvatarURL())
-        .addField('Play Command', `${config.prefix}play`)
+        .addField('Play Command', `${config.prefix}play <song url> - <name>`)
         .addField('Loop Command', `${config.prefix}loop`)
         .addField('Stop Command', `${config.prefix}stop`)
         .addField('Skip Command', `${config.prefix}skip`)
