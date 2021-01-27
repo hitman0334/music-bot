@@ -107,7 +107,8 @@ client.on("message", async (message) => {
         try {
         let volume = Number(args[0], 10)
         if (!volume) {
-            let volume = (queue) => message.channel.send({embed: {color: "GREEN", description: `Volume: ${queue.volume}%`}}) 
+            const status = (queue) => `Volume: ${queue.volume}%`;
+            message.channel.send({embed: {color: `${status}`}})
             return;
         }
         if (isNaN(volume)) return message.channel.send({embed: {color: "RED", description: "The given number is invalid!"}})
