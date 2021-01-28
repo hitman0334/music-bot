@@ -49,7 +49,9 @@ client.on("message", async (message) => {
     if (command == "play" || command === "p") {
         try {
         if (!message.member.voice.channel) return message.channel.send({embed: {color: "RED", description: "Please join a voice channel!"}})
-            if (message.member.voice.channel !== message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
+            if (message.guild.me.voice.channel) {
+                if (message.member.voice.channel !== message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
+            }
         message.guild.me.voice.setDeaf(true, "Privacy reasons")
     if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
         distube.play(message, args.join(" ")); // plays music from youtube
