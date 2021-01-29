@@ -19,6 +19,7 @@ client.on('ready', () => {
 client.on("message", async (message) => {
     if (message.author.bot) return;
     if (!message.content.startsWith(config.prefix)) return;
+    if (!message.guild)
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift();
 
@@ -195,5 +196,6 @@ distube
     message.channel.send({embed: {color: "GREEN", description: "Music Queue ended"}})
 })
 });
+
 
 client.login(config.token);
