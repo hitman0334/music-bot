@@ -42,6 +42,7 @@ client.on("message", async (message) => {
         .addField('Karaoke Comamnd', `${config.prefix}karaoke`)
         .addField('Nightcore Command', `${config.prefix}nightcore`)
         .addField('Vaporwave Command', `${config.prefix}vaporwave`)
+        .addField('Disconnect Command', `${config.prefix}disconnect`)
         .setFooter(`© Shahzain `, client.user.displayAvatarURL())
         message.channel.send(embed) 
     }
@@ -154,6 +155,9 @@ client.on("message", async (message) => {
         message.member.voice.channel.join()
         message.guild.me.voice.setDeaf(true, "Privacy reasons")
         message.channel.send({embed: {color: "GREEN", description: "Joined your voice channel"}})
+    }
+    if (command === "disconnect" || command === "dc" || command === "leave") {
+        if (!message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: "I am not in a voice channel!"}})
     }
 
     if ([`3d`, `bassboost`, `echo`, `karaoke`, `nightcore`, `vaporwave`].includes(command)) {
