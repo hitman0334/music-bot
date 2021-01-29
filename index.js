@@ -65,7 +65,6 @@ client.on("message", async (message) => {
     if (command === "loop" || command === "repeat") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}}) // Checks if music is playing or not
         try {
-            
         let mode = distube.setRepeatMode(message, parseInt(args[0]));
         mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
         message.channel.send({embed: {color: "GREEN", description: "Set repeat mode to `" + mode + "`"}});
@@ -119,7 +118,7 @@ client.on("message", async (message) => {
         let volume = Number(args[0], 10)
         if (!volume) {
             const status = (queue) => `Volume: ${queue.volume}%`;
-            message.channel.send({embed: {color: "GREEN", description: `${status}`}})
+            message.channel.send({embed: {color: "GREEN", description: `${status(queue)}`}})
             return;
         }
         if (isNaN(volume)) return message.channel.send({embed: {color: "RED", description: "The given number is invalid!"}})
