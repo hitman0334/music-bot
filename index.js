@@ -49,7 +49,6 @@ client.on("message", async (message) => {
 
     if (message.guild.me.voice.channel) {
         if (message.member.voice.channel !== message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
-        return;
     }
 
     if (command == "play" || command === "p") {
