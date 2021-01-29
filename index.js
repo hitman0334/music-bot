@@ -46,19 +46,14 @@ client.on("message", async (message) => {
         message.channel.send(embed) 
     }
 
+    if (message.guild.me.voice.channel) {
+        if (message.member.voice.channel !== message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
+        return;
+    }
+
     if (command == "play" || command === "p") {
         try {
         if (!message.member.voice.channel) return message.channel.send({embed: {color: "RED", description: "Please join a voice channel!"}})
-            if (message.guild.me.voice.channel) {
-                if (message.member.voice.channel !== message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
-                try {
-                message.guild.me.voice.setDeaf(true, "Privacy reasons")
-                if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
-                    distube.play(message, args.join(" ")); // plays music from youtube
-                } catch(err) {
-                    message.channel.send({embed: "RED", description: `An error occured: ${err}`})
-                }
-            }
         message.guild.me.voice.setDeaf(true, "Privacy reasons")
     if (!args.join(" ")) return message.channel.send({embed: {color: "RED", description: 'Please provide the song name or link!'}})
         distube.play(message, args.join(" ")); // plays music from youtube
@@ -82,7 +77,6 @@ client.on("message", async (message) => {
     if (command == "stop") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
-            if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
         distube.stop(message);
         message.channel.send({embed: {color: "GREEN", description:"Stopped the music!"}});
         } catch(err) {
