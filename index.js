@@ -87,8 +87,8 @@ client.on("message", async (message) => {
     if (command == "skip") {
         if (!distube.isPlaying(message)) return message.channel.send({embed: {color: "RED", description: "Nothing is playing"}})
         try {
-            if (!message.member.voice.channel == message.guild.me.voice.channel) return message.channel.send({embed: {color: "RED", description: `You must be in the same voice channel as ${client.user}`}})
         distube.skip(message)
+        message.channel.send({embed: {color: "GREEN", description: "Skipped the song!"}})
     } catch(err) {
         message.channel.send({embed: {color: "RED", description: "There was an error"}})
     }
