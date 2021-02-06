@@ -3,7 +3,8 @@ const Discord = require('discord.js'),
     client = new Discord.Client(),
     config = {
         prefix: process.env.PREFIX || "Custom Prefix",
-        token: process.env.TOKEN || "Your Discord Token"
+        token: process.env.TOKEN || "Your Discord Token",
+        status: process.env.STATUS || "Bot by Shahzain"
     };
 
 const distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: true });
@@ -11,7 +12,7 @@ const distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: true 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     console.log(`This bot is made by Shahzain please do not take any credits of this bot`) 
-    client.user.setActivity(`${config.prefix}help || Bot by Shahzain`, {
+    client.user.setActivity(`${config.prefix}help || ${config.status}`, {
         type: "LISTENING"
     })
 });
